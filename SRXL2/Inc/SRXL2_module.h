@@ -1,24 +1,25 @@
 /*
- * FC_RC/SRXL2.h
+ * SRXL2_module.h
  *
  *  Created on: Mar 7, 2025
  *      Author: leecurrent04
  *      Email : leecurrent04@inha.edu
  */
 
-#ifndef INC_FC_RC_SRXL2_H_
-#define INC_FC_RC_SRXL2_H_
+#ifndef SRXL2_MODULE_H_
+#define SRXL2_MODULE_H_
 
 
 /* Includes ------------------------------------------------------------------*/
-#include <main.h>
 
-#include <FC_RC/Protocol/SRXL2/spm_srxl.h>
-#include <FC_RC/Protocol/SRXL2/SRXL2.h>
-#include <FC_RC/Protocol/SRXL2/SRXL2_type.h>
-#include <FC_RC/RC_module.h>
+#include <spm_srxl.h>
+#include <SRXL2.h>
+#include <SRXL2_type.h>
 
-#include <FC_Serial/MiniLink/MiniLink.h>
+// 아래의 모듈을 제거하도록 코드를 재 작성해야함.
+// #include <main.h>
+//#include <FC_RC/RC_module.h>
+//#include <FC_Serial/MiniLink/MiniLink.h>
 
 
 /* Macro ---------------------------------------------------------------------*/
@@ -30,14 +31,14 @@
 
 
 /* Variables -----------------------------------------------------------------*/
-extern uint8_t* RC_Buffer;
-extern SRXL2_Packet packet;
-extern SRXL2_Handshake_Data receiver_info;
+// extern uint8_t* RC_Buffer;
+// extern SRXL2_Packet packet;
+// extern SRXL2_Handshake_Data receiver_info;
 extern const uint8_t SRXL_FC_DEVICE_ID;
 
 
 /* Functions 2 ---------------------------------------------------------------*/
-int SRXL2_doHandshake(SRXL2_Handshake_Packet *tx_packet);
+int SRXL2_doHandshake(SRXL2* self);
 int SRXL2_parseControlData(SRXL2_Control_Packet *rx);
 int SRXL2_isReceived(void);
 

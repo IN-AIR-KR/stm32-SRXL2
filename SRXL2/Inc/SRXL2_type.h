@@ -1,13 +1,13 @@
 /*
- * FC_RC/SRXL2_type.h
+ * SRXL2_type.h
  *
  *  Created on: Mar 7, 2025
  *      Author: leecurrent04
  *      Email : leecurrent04@inha.edu
  */
 
-#ifndef INC_FC_RC_SRXL2_TYPE_H_
-#define INC_FC_RC_SRXL2_TYPE_H_
+#ifndef SRXL2_TYPE_H_
+#define SRXL2_TYPE_H_
 
 #include "main.h"
 
