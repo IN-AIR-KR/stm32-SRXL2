@@ -152,56 +152,31 @@ int SRXL2_readByteIRQ2(const uint8_t data)
 	switch(cnt)
 	{
 	case 0:
-		if(data == SPEKTRUM_SRXL_ID){
-			RC_Buffer[cnt] = data;
-			cnt++;
-		}
+		if(data != SPEKTRUM_SRXL_ID){ cnt=0; return -1;}
 		break;
 	case 1:
 		switch(data){
-		case SRXL_HANDSHAKE_ID:
-			maxLen = 14;
-			break;
-		case SRXL_BIND_ID:
-			maxLen = 21;
-			break;
-		case SRXL_PARAM_ID:
-			maxLen = 14;
-			break;
-		case SRXL_RSSI_ID:
-			maxLen = 10;
-			break;
-		case SRXL_TELEM_ID:
-			maxLen = 22;
-			break;
-		case SRXL_CTRL_ID:
-			maxLen = 80;
-			break;
-		default :
-			cnt = 0;
-			return -1;
+		case SRXL_HANDSHAKE_ID:maxLen = 14; break;
+		case SRXL_BIND_ID:maxLen = 21; break;
+		case SRXL_PARAM_ID: maxLen = 14; break;
+		case SRXL_RSSI_ID: maxLen = 10; break;
+		case SRXL_TELEM_ID: maxLen = 22; break;
+		case SRXL_CTRL_ID: maxLen = 80; break;
+		default : cnt = 0; return -1;
 		}
-		RC_Buffer[cnt] = data;
-		cnt++;
 		break;
-		default :
-			RC_Buffer[cnt] = data;
+	default :
+		if(cnt == 2 && maxLen == 80){ maxLen = data;} // Control Packet은 사이즈가 가변적임
+		if(cnt != maxLen-1){ break;}	// return 0 if the last byte is received.
 
-			/*
-			 * Control Packet은 사이즈가 가변적임
-			 * 3번째 바이트가 패킷의 크기를 결정함
-			 */
-			if(maxLen == 80) maxLen = RC_Buffer[cnt];
-
-			if(cnt == maxLen-1){
-				cnt=0;
-				return 0;
-			}
-			else{
-				cnt++;
-			}
-			break;
+		RC_Buffer[cnt] = data;
+		cnt=0;
+		return 0;
 	}
+
+	RC_Buffer[cnt] = data;
+	cnt++;
+
 	return 1;
 }
 
